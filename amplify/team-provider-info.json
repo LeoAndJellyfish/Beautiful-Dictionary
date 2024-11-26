@@ -1,0 +1,22 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beautifuldictionary-dev-fa502-authRole",
+      "UnauthRoleArn": "arn:aws:iam::593793022355:role/amplify-beautifuldictionary-dev-fa502-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::593793022355:role/amplify-beautifuldictionary-dev-fa502-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-beautifuldictionary-dev-fa502-deployment",
+      "UnauthRoleName": "amplify-beautifuldictionary-dev-fa502-unauthRole",
+      "StackName": "amplify-beautifuldictionary-dev-fa502",
+      "StackId": "arn:aws:cloudformation:us-east-1:593793022355:stack/amplify-beautifuldictionary-dev-fa502/6cec4e80-ac03-11ef-887f-1211912a6bb9",
+      "AmplifyAppId": "dhnp7us2dmf5i"
+    },
+    "categories": {
+      "function": {
+        "expressAPI": {
+          "openaiApiKey": "2053c2a9b5b44f3bab3611177a1ef3d9"
+        }
+      }
+    }
+  }
+}
