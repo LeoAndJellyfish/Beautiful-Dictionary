@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
   const [showAnimation, setShowAnimation] = useState(false);
@@ -25,11 +26,11 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
     <div
       className={`bg-white shadow-lg rounded-xl p-6 text-center max-w-3xl w-full ${showAnimation? 'fade-in' : ''}`}
       onAnimationEnd={handleAnimationEnd}
-      style={{ transform: 'scale(1.3)' }} // 放大单词卡
+      style={{ transform: 'scale(1.5)' }} // 放大单词卡
     >
       <h1 className="text-3xl font-bold text-gray-800">{result.word}</h1>
       <p className="text-2xl text-gray-600 mt-2">{result.meaning}</p>
-      <p className="text-2xl text-gray-600 mt-2">{aiResponse}</p>
+      <ReactMarkdown>{aiResponse}</ReactMarkdown>
       {/* OpenAI 请求按钮 */}
       <button
         onClick={() => onAskOpenAI(result.word)}

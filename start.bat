@@ -1,3 +1,0 @@
-@echo off
-echo Starting the frontend server...
-npm run start

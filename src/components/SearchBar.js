@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }) => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === " ") {
+      if (e.key === " "&& document.activeElement !== inputRef.current) {
         e.preventDefault(); // 阻止空格键的默认行为
         inputRef.current.focus(); // 聚焦到输入框
       }
