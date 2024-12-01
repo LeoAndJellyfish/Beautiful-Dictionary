@@ -9,33 +9,9 @@ dotenv.config();
 const app = express();
 const PORT = 5000;
 
-
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// 路由：查询单词定义
-app.get("/api/define", async (req, res) => {
-  const { word } = req.query;
-
-  if (!word) {
-    return res.status(400).json({ error: "Word query parameter is required" });
-  }
-
-  try {
-    // 调用外部字典 API（如 Free Dictionary API）
-    const response = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-    );
-    const data = response.data[0];
-    res.json({
-      word: data.word,
-      meaning: data.meanings[0]?.definitions[0]?.definition || "No definition found",
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch word definition" });
-  }
-});
 
 // 路由：调用 OpenAI API
 app.post("/api/openai", async (req, res) => {

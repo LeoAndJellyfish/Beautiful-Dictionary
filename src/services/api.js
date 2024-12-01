@@ -1,19 +1,27 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/define";
-
 export const fetchWordDefinition = async (word) => {
+  if (!word) {
+    return { error: "No data found for the given word." };
+  }
+
   try {
-    const response = await axios.get(`${API_URL}?word=${word}`);
-    return response.data;
+    // 调用外部字典 API（如 Free Dictionary API）
+    const response = await axios.get(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    );
+    const data = response.data[0];
+    return {
+      word: word,
+      meaning: data.meanings[0]?.definitions[0]?.definition || "No definition found",
+    };
   } catch (error) {
-    console.error("Error fetching word definition:", error);
-    return { word, meaning: "No definition found." };
+    return { word: word, meaning: "No definition found" };
   }
 };
 export const askOpenAI = async (word) => {
   try {
-    const response = await fetch("http://localhost:5000/api/openai", {
+    const response = await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
