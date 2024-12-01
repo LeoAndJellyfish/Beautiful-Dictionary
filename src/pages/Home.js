@@ -26,12 +26,6 @@ const Home = () => {
       {/* 主内容 */}
       <div className="flex-grow flex flex-col items-center justify-center p-6">
         <ResultCard result={result} onAskOpenAI={handleAskOpenAI} aiResponse={aiResponse} />
-        {/* {aiResponse && (
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg text-gray-800">
-            <h3 className="font-semibold text-xl">AI 解释:</h3>
-            <p>{aiResponse}</p>
-          </div>
-        )} */}
       </div>
       {/* 底部搜索栏 */}
       <SearchBar onSearch={handleSearch} />

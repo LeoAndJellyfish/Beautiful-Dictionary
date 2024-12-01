@@ -14,6 +14,7 @@ export const fetchWordDefinition = async (word) => {
     return {
       word: word,
       meaning: data.meanings[0]?.definitions[0]?.definition || "No definition found",
+      audio: data.phonetics[0]?.audio || "No audio found",
     };
   } catch (error) {
     return { word: word, meaning: "No definition found" };

@@ -30,6 +30,13 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
     >
       <h1 className="text-3xl font-bold text-gray-800">{result.word}</h1>
       <p className="text-2xl text-gray-600 mt-2">{result.meaning}</p>
+      <div className="flex justify-center">
+        {result.audio !== "No audio found" && (
+          <audio key={result.audio} id="myAudio" controls>
+            <source src={result.audio} type="audio/mpeg" />
+          </audio>
+        )}
+      </div>
       <ReactMarkdown>{aiResponse}</ReactMarkdown>
       {/* OpenAI 请求按钮 */}
       <button
