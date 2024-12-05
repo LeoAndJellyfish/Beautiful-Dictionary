@@ -13,7 +13,12 @@ const SearchBar = ({ onSearch }) => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      inputRef.current.blur();
       handleSearch();
+    }
+    if (e.key === "Tab") {
+      e.preventDefault(); // 阻止Tab键的默认行为
+      inputRef.current.blur();
     }
   };
 

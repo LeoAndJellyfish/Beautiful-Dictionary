@@ -3,12 +3,35 @@ import ReactMarkdown from "react-markdown";
 
 const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
   const [showAnimation, setShowAnimation] = useState(false);
+  const [aing, setaing] = useState(false);
 
   useEffect(() => {
     if (result) {
       setShowAnimation(true);
     }
   }, [result]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Tab"&& result &&!aing) {
+        e.preventDefault(); // 阻止Tab键的默认行为
+        handleAskOpenAI(result.word)
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onAskOpenAI,result]);
+
+  const handleAskOpenAI = (word) => {
+    setaing(true); // 开始请求时禁用按钮
+    onAskOpenAI(word).finally(() => {
+      setaing(false); // 请求完成后启用按钮
+    });
+  };
 
   if (!result) {
     return (
@@ -17,7 +40,6 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
       </p>
     );
   }
-
   const handleAnimationEnd = () => {
     setShowAnimation(false);
   };
@@ -40,8 +62,9 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
       <ReactMarkdown>{aiResponse}</ReactMarkdown>
       {/* OpenAI 请求按钮 */}
       <button
-        onClick={() => onAskOpenAI(result.word)}
-        className="bottom-4 right-4 bg-purple-500 text-white rounded-full px-4 py-2 text-sm font-medium hover:bg-purple-600 transition"
+        onClick={() => handleAskOpenAI(result.word)}
+        disabled={aing}
+        className={`bottom-4 right-4 bg-purple-500 text-white rounded-full px-4 py-2 text-sm font-medium hover:bg-purple-600 transition ${aing ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         Ask AI
       </button>
