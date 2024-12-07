@@ -13,9 +13,11 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Tab"&& result &&!aing) {
+      if (e.key === "Tab") {
         e.preventDefault(); // 阻止Tab键的默认行为
-        handleAskOpenAI(result.word)
+        if(result && !aing){
+          handleAskOpenAI(result.word)
+        }
       }
     };
 
@@ -24,10 +26,10 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onAskOpenAI,result]);
+  }, [onAskOpenAI,result,aing]);
 
   const handleAskOpenAI = (word) => {
-    setaing(true); // 开始请求时禁用按钮
+    setaing(true); // 开始请求时禁用按钮以及Tab快速询问
     onAskOpenAI(word).finally(() => {
       setaing(false); // 请求完成后启用按钮
     });
