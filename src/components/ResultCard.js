@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [aing, setaing] = useState(false);
+
+  const handleAskOpenAI = useCallback(
+    (word) => {
+      setaing(true); // 开始请求时禁用按钮以及Tab快速询问
+      onAskOpenAI(word).finally(() => {
+        setaing(false); // 请求完成后启用按钮
+      });
+    },
+    [onAskOpenAI] // 仅当 onAskOpenAI 变化时，重新创建 handleAskOpenAI
+  );
 
   useEffect(() => {
     if (result) {
@@ -26,14 +36,7 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onAskOpenAI,result,aing]);
-
-  const handleAskOpenAI = (word) => {
-    setaing(true); // 开始请求时禁用按钮以及Tab快速询问
-    onAskOpenAI(word).finally(() => {
-      setaing(false); // 请求完成后启用按钮
-    });
-  };
+  }, [onAskOpenAI,result,aing,handleAskOpenAI]);
 
   if (!result) {
     return (
@@ -55,7 +58,7 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
       <h1 className="text-3xl font-bold text-gray-800">{result.word}</h1>
       <p className="text-2xl text-gray-600 mt-2">{result.meaning}</p>
       <div className="flex justify-center">
-        {result.audio !== "No audio found" && (
+        {result.audio && result.audio !== "No audio found" && (
           <audio key={result.audio} id="myAudio" controls>
             <source src={result.audio} type="audio/mpeg" />
           </audio>
