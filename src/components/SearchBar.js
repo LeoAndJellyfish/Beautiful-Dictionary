@@ -39,7 +39,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="fixed inset-x-0 bottom-0 flex justify-center">
-      <div className="w-1/2 bg-white shadow-t rounded-t-3xl px-6 py-4 flex items-center justify-center">
+      <div className="w-full md:w-1/2 min-w-[320px] max-w-3xl bg-white shadow-t rounded-t-3xl px-6 py-4 flex items-center justify-center">
         <input
           ref={inputRef}
           type="text"
