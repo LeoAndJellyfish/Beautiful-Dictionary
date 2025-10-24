@@ -27,7 +27,7 @@ export const askOpenAI = async (word) => {
 
   try {
     // 直接调用 01-AI API
-    const apiKey = process.env.REACT_APP_OPENAI_API_KEY; // 从环境变量获取 API 密钥
+    const apiKey = process.env.OPENAI_API_KEY; // 从环境变量获取 API 密钥
     const prompt = `你是一个词典，请给出中文释义: ${word}`;
     
     const response = await axios.post(
