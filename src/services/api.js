@@ -21,19 +21,34 @@ export const fetchWordDefinition = async (word) => {
   }
 };
 export const askOpenAI = async (word) => {
-  try {
-    const response = await fetch("/api/openai", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt: `给出中文释义: ${word}` }),
-    });
+  if (!word) {
+    return "请输入要查询的单词";
+  }
 
-    const data = await response.json();
-    return data.response; // 返回 OpenAI 的回应
+  try {
+    // 直接调用 01-AI API
+    const apiKey = process.env.REACT_APP_OPENAI_API_KEY; // 从环境变量获取 API 密钥
+    const prompt = `你是一个词典，请给出中文释义: ${word}`;
+    
+    const response = await axios.post(
+      "https://api.lingyiwanwu.com/v1/chat/completions",
+      {
+        model: "yi-lightning",
+        messages: [
+          { role: "user", content: prompt },
+        ],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+      }
+    );
+
+    return response.data.choices[0].message.content; // 返回 01-AI 的回应
   } catch (error) {
-    console.error("Failed to fetch OpenAI response:", error);
-    return "There was an error fetching OpenAI's response.";
+    console.error("01-AI request failed:", error);
+    return "获取AI释义时出现错误，请稍后重试";
   }
 };
