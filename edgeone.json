@@ -1,0 +1,29 @@
+{
+  "build": {
+    "command": "npm run build",
+    "output": "build"
+  },
+  "functions": {
+    "directory": "edge-functions"
+  },
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/api/.*",
+      "dest": "/edge-functions"
+    },
+    {
+      "handle": "rewrite",
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "OPENAI_API_KEY": {
+      "description": "零一万物API密钥",
+      "required": true
+    }
+  }
+}
