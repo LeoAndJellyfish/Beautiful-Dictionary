@@ -2,28 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 自定义样式（可选） */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap');
+
 body {
-  @apply bg-gray-100 text-gray-800;
-  font-family: 'Inter', sans-serif; /* 选择一种简洁现代的字体 */
+  font-family: 'Noto Sans SC', 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f0f1f3;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  min-height: 100vh;
+  color: #374151;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3 {
-  @apply font-bold;
+  @apply font-medium;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.07),
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 button {
-  @apply transition duration-200 ease-in-out transform hover:scale-105;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus {
-  @apply outline-none ring-2 ring-purple-400;
+  outline: none;
 }
+
+input::placeholder {
+  color: #b0b5bf;
+}
+
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .fade-in {
-  animation: fade-in 0.5s ease-in-out;
+  animation: fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
 }

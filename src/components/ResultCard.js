@@ -7,12 +7,12 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
 
   const handleAskOpenAI = useCallback(
     (word) => {
-      setaing(true); // 开始请求时禁用按钮以及Tab快速询问
+      setaing(true);
       onAskOpenAI(word).finally(() => {
-        setaing(false); // 请求完成后启用按钮
+        setaing(false);
       });
     },
-    [onAskOpenAI] // 仅当 onAskOpenAI 变化时，重新创建 handleAskOpenAI
+    [onAskOpenAI]
   );
 
   useEffect(() => {
@@ -24,9 +24,9 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Tab") {
-        e.preventDefault(); // 阻止Tab键的默认行为
-        if(result && !aing){
-          handleAskOpenAI(result.word)
+        e.preventDefault();
+        if (result && !aing) {
+          handleAskOpenAI(result.word);
         }
       }
     };
@@ -36,42 +36,49 @@ const ResultCard = ({ result, onAskOpenAI, aiResponse }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onAskOpenAI,result,aing,handleAskOpenAI]);
+  }, [onAskOpenAI, result, aing, handleAskOpenAI]);
 
   if (!result) {
     return (
-      <p className="text-gray-500 text-center text-lg">
-        输入一个单词以获取解释。
-      </p>
+      <div className="glass rounded-2xl px-10 py-12 text-center max-w-lg w-full float-animation">
+        <p className="text-lg font-light" style={{ color: '#9ca3af' }}>
+          输入一个单词以获取解释
+        </p>
+      </div>
     );
   }
+
   const handleAnimationEnd = () => {
     setShowAnimation(false);
   };
 
   return (
     <div
-      className={`bg-white shadow-lg rounded-xl p-6 text-center max-w-3xl w-full ${showAnimation? 'fade-in' : ''}`}
+      className={`glass-strong rounded-3xl p-8 text-center max-w-2xl w-full ${showAnimation ? 'fade-in' : ''}`}
       onAnimationEnd={handleAnimationEnd}
-      style={{ transform: 'scale(1.5)' }} // 放大单词卡
+      style={{ transform: 'scale(1.35)' }}
     >
-      <h1 className="text-3xl font-bold text-gray-800">{result.word}</h1>
-      <p className="text-2xl text-gray-600 mt-2">{result.meaning}</p>
-      <div className="flex justify-center">
+      <h1 className="text-3xl font-semibold mb-2" style={{ color: '#222' }}>{result.word}</h1>
+      <p className="text-xl font-normal mb-5" style={{ color: '#666' }}>{result.meaning}</p>
+      <div className="flex justify-center mb-5">
         {result.audio && result.audio !== "No audio found" && (
-          <audio key={result.audio} id="myAudio" controls>
+          <audio key={result.audio} id="myAudio" controls className="rounded-lg">
             <source src={result.audio} type="audio/mpeg" />
           </audio>
         )}
       </div>
-      <ReactMarkdown>{aiResponse}</ReactMarkdown>
-      {/* OpenAI 请求按钮 */}
+      <div className="text-left mb-6 prose prose-sm max-w-none" style={{ color: '#444' }}>
+        <ReactMarkdown>{aiResponse}</ReactMarkdown>
+      </div>
       <button
         onClick={() => handleAskOpenAI(result.word)}
         disabled={aing}
-        className={`bottom-4 right-4 bg-purple-500 text-white rounded-full px-4 py-2 text-sm font-medium hover:bg-purple-600 transition ${aing ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`px-6 py-2.5 rounded-xl text-sm font-medium text-white hover:brightness-110 active:scale-95 transition-all ${
+          aing ? 'opacity-45 cursor-not-allowed' : ''
+        }`}
+        style={{ background: '#555' }}
       >
-        Ask AI
+        {aing ? '思考中...' : 'Ask AI'}
       </button>
     </div>
   );
