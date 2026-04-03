@@ -1,8 +1,6 @@
 // Edge Functions API服务
 // 部署到EdgeOne后，这些URL将自动映射到对应的Edge Functions
 
-const EDGE_FUNCTIONS_BASE_URL = ''; // 部署后自动映射，本地开发时可使用代理
-
 export const fetchWordDefinition = async (word) => {
   if (!word) {
     return { error: "No data found for the given word." };
